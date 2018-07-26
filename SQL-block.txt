@@ -1,0 +1,24 @@
+2.Напишите запрос, который выберет имя пользователя (bids.name) с самой высокой ценой заявки (bids.price)
+ SELECT bids.name FROM bids ORDER BY bids.price DESC LIMIT 1
+
+
+3.Напишите запрос, который выберет название мероприятия (events.caption), по которому нет заявок
+
+  select caption 
+  from EVENTS as a left
+  join bids as b on a.id = b.id_event
+  WHERE b.id_event IS NULL
+
+4.Напишите запрос, который выберет название мероприятия (events.caption), по которому больше трех заявок
+
+ select 
+ caption from EVENTS as
+ a left join bids as b on a.id = b.id_event having 
+ sum(id_event > 3)
+
+5.Напишите запрос, который выберет название мероприятия (events.caption), по которому больше всего заявок
+
+ select caption from events
+ as a join (select id_event,count(*) 
+ as count from bids group by id_event ) 
+ as b on a.id = b.id_event having max(count)
